@@ -1,0 +1,73 @@
+import ApiClient from "./ApiClient";
+import { cleanupTokens } from "./TokenConfig";
+
+//Register
+export const registerAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/register", datas);
+    return response.data;
+}
+
+//Login
+export const logInAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/login", datas);
+    const { accessToken, refreshToken } = response.data;
+    
+    //Sauvegarde des tokens
+    if (datas.rememberMe) {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+    } else {
+        sessionStorage.setItem("accessToken", accessToken);
+        sessionStorage.setItem("refreshToken", refreshToken);
+    }
+
+    alert("Connexion Reussie !");
+    //return response.data;
+}
+
+//Logout
+export const logOutAsync = async () => {
+    try {
+        const refreshToken = localStorage.getItem("refreshToken") || sessionStorage.getItem("refreshToken");
+        if (!refreshToken) return null;
+        
+        //const response = await ApiClientAuth.post("/auth/logout", { refreshToken });
+        const response = await ApiClient.post("/auth/signout");
+
+        // Nettoyage 
+        cleanupTokens();
+
+        alert("Déconnexion Reussie !");
+        //return response.data;
+    } catch (error) {
+        cleanupTokens();
+    }
+}
+
+//Confirmation du mail
+export const EmailVerifiedAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/emailVerified", datas);
+    return response.data;
+}
+
+//Confirmation du mail
+export const ConfirmationCodeAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/codeConfirmation", datas);
+    return response.data;
+}
+
+//Confirmation du mail
+export const ResetPasswordAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/resetPassword", datas);
+    return response.data;
+}
+
+//Profil token profil
+export const ProfilAsync = async () => {
+    const response = await ApiClient.get("/me/profil");
+    return response.data;
+}
+
+
+
+
