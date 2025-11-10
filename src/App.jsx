@@ -19,6 +19,8 @@ import ConfirmationAccount from './auth/ConfirmationAccount';
 import EmailVerified from './auth/EmailVerified';
 import ResetPassword from './auth/ResetPassword';
 import { UserShow } from './pages/users/UserShow';
+import { AddRole } from './pages/users/AddRole';
+import ChangePassword from './auth/ChangePassword';
 
 export default function App() {
 
@@ -61,15 +63,19 @@ function AppContent() {
           {/* Gestions */}
           {!user && <Route path="/login" element={<Login />} />}
           {!user && <Route path="/register" element={<Register />} />}
-          <Route path={`/resetPassword`} element={<EmailVerified />} />
-          <Route path={`/auth/codeConfirmation`} element={<ConfirmationAccount />} />
-          <Route path={`/auth/emailverified`} element={<EmailVerified />} />
-          <Route path={`/auth/resetPassword`} element={<ResetPassword />} />
+          <Route path="/resetPassword" element={<EmailVerified />} />
+          <Route path="/auth/codeConfirmation" element={<ConfirmationAccount />} />
+          <Route path="/auth/emailverified" element={<EmailVerified />} />
+          <Route path="/auth/resetPassword" element={<ResetPassword />} />
+          <Route path="/auth/changePassword" element={<ChangePassword />} />
 
           {/* Users */}
           {user && <Route path={`/profil/${user.id}`} element={<Profil />} />} 
           {user && <Route path="/users" element={<UserList />} />} 
-          <Route path="/user" element={<UserShow />} /> 
+          <Route path="/users" element={<UserList />} /> 
+          <Route path="/users/:id" element={<UserShow />} /> 
+          <Route path="/users/role/create/:id" element={<AddRole />} /> 
+          <Route path="/users/role/edit/:id" element={<UserShow />} /> 
 
           {/* Roles */}
           <Route path="/roles" element={<RoleList />} /> 

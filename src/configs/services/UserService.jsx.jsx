@@ -10,6 +10,20 @@ export const getUser = async (id) =>{
     return response.data;
 }
 
+export const addRoleToUser = async (dataForm) => {
+    const response = await apiClient.post("/user/addRole", dataForm);
+    return response.data;
+}
+
+export const delRoleToUser = async (dataForm) => {
+    const response = await apiClient.post("/user/delRole", dataForm);
+    return response.data;
+}
+
+
+
+
+
 export const createUser = async (userData) => {
     const response = await apiClient.post("/user", userData);
     return response.data;

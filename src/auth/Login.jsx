@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import SiteConfigs from "../configs/SiteConfigs";
-import { ButtonSubmit, CheckboxFieldLogin, EmailField, PasswordFieldLogin, TextField } from "../components/FormComponents";
+import { ButtonSubmit, CheckboxFieldLogin, PasswordFieldLogin, TextField } from "../components/FormComponents";
 import { useAuth } from "../configs/api/ApiConfigs";
-import { logInAsync } from "../configs/api/ApiClientAuth";
 import { Loading, NetworkAlert } from "../components/Components";
 
 export default function Login() {

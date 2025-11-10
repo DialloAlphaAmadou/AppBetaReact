@@ -69,6 +69,26 @@ export function ConfirmPasswordField({ register, errors, watch }) {
     );
 }
 
+export function OldPasswordField({ register, errors }) {
+    const {t} = useTranslation();
+    const [showPassword, setShowPassword] = useState(false);
+
+    return (
+        <div className="mb-3 position-relative">
+            <label htmlFor="code" className="form-label">{t("Old Password")} :</label>
+            <input type={showPassword ? "text" : "password"} id="code" placeholder={t("Old Password")}
+                className={`form-control border-${SiteConfigs.color} pe-5`} // padding-end to not overlap icon
+                {...register("code", { required: `${t("Old Password")} ${t("required")}` })}
+            />
+            <i className={`bi bi-eye${!showPassword ? "-slash" : ""} position-absolute`}
+                style={{ top: "38px", right: "15px", cursor: "pointer", color: "#888" }}
+                onClick={() => setShowPassword(!showPassword)} >
+            </i>
+            {errors.code && ( <p className="text-danger">{errors.code.message}</p> )}
+        </div>
+    );
+}
+
 export function EmailField({ register, errors }) {
     const { t } = useTranslation();
 
@@ -135,5 +155,40 @@ export function ButtonSubmit({ name, icon }) {
         </div>  
     );
 }
-        
+  
+export function SelectField({ label, name, options = [], register, errors, required = true, key = false }) {
+  const { t } = useTranslation();
+  
+  // 🔧 Normalisation des options : accepte string[] ou { value, label }[]
+  const normalizedOptions = options.map((opt) => {
+    if (typeof opt === "string") {
+      return { value: opt, label: opt };
+    } else if (typeof opt === "object" && opt !== null) {
+      return {
+        value: key ? opt.id : opt.name ?? opt.value ?? "",
+        label: opt.label ?? opt.name ?? opt.value ?? "",
+      };
+    } else {
+      return { value: "", label: "" };
+    }
+  });
+
+  return (
+    <div className="mb-3">
+      <label htmlFor={name} className="form-label">{t(label)} :</label>
+
+      <select id={name} className={`form-select border-${SiteConfigs.color}`}
+        {...register(name, { required: required ? `${t(label)} ${t("required")}` : false, })} >
+
+        <option value="">{t("Select an option")}</option>
+        {normalizedOptions.map((opt, i) => (
+          <option key={i} value={opt.value}>  {t(opt.label)} </option>
+        ))}
+
+      </select>
+
+      {errors?.[name] && <p className="text-danger">{errors[name].message}</p>}
+    </div>
+  );
+}
 

@@ -2,13 +2,13 @@ import ApiClient from "./ApiClient";
 import { cleanupTokens } from "./TokenConfig";
 
 //Register
-export const registerAsync = async (datas) => {
+export const RegisterAsync = async (datas) => {
     const response = await ApiClient.post("/auth/register", datas);
     return response.data;
 }
 
 //Login
-export const logInAsync = async (datas) => {
+export const LogInAsync = async (datas) => {
     const response = await ApiClient.post("/auth/login", datas);
     const { accessToken, refreshToken } = response.data;
     
@@ -26,7 +26,7 @@ export const logInAsync = async (datas) => {
 }
 
 //Logout
-export const logOutAsync = async () => {
+export const LogOutAsync = async () => {
     try {
         const refreshToken = localStorage.getItem("refreshToken") || sessionStorage.getItem("refreshToken");
         if (!refreshToken) return null;
@@ -56,9 +56,15 @@ export const ConfirmationCodeAsync = async (datas) => {
     return response.data;
 }
 
-//Confirmation du mail
+//Modifier le password a partir du code de confirmation 
 export const ResetPasswordAsync = async (datas) => {
     const response = await ApiClient.post("/auth/resetPassword", datas);
+    return response.data;
+}
+
+//Modifier le password a partir de l'ancien password
+export const ChangePasswordAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/changePassword", datas);
     return response.data;
 }
 

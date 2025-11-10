@@ -19,7 +19,7 @@ export default function Profil() {
       if (error) return <p className="text-danger text-center">{error}</p>;
       if (!data || (Array.isArray(data) && data.length === 0)) 
           return <p className="text-danger text-center">{t("Notfound")}</p>; 
-     
+     console.log(user);
   return (
     <div className="col-sm-8 col-md-6 col-lg-4 mx-auto p-2 rounded shadow text-center">
       {user ? 
@@ -29,11 +29,11 @@ export default function Profil() {
           <p>{data.firstName}</p>
           <p>{user.id}</p>
           <p>{user.email}</p>
-          <p>{user.role}</p>
+          <p>{user.role.join(" ")}</p>
         </div>
       : <h3>Profil</h3>}
       <div className="mb-2">
-        <Link to="/resetPassword" className={`btn btn-${SiteConfigs.color} rounded px-2 bi-person-fill-lock w-100`}> {t("Change_password")} </Link>
+        <Link to="/auth/changePassword" className={`btn btn-${SiteConfigs.color} rounded px-2 bi-person-fill-lock w-100`}> {t("Change_password")} </Link>
       </div>
       
       <LogoutButton />

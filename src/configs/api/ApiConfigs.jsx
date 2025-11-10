@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { getToken, getUserFromToken, isTokenExpired } from "./TokenConfig";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ConfirmationCodeAsync, EmailVerifiedAsync, logInAsync, logOutAsync } from "./ApiClientAuth";
+import { EmailVerifiedAsync, LogInAsync, LogOutAsync } from "./ApiClientAuth";
 import { Loading } from "../../components/Components";
 //import { loginAsync, logoutAsync } from "../services/AuthService";
 
@@ -36,14 +36,14 @@ export function AuthProvider({ children }) {
 
     //LogIn
     const logIn = async (data) => {
-        await logInAsync(data);
+        await LogInAsync(data);
         var userInfos = getUserFromToken();
         setUser(userInfos)
     };
 
     //LogOut
     const logOut = async () => {
-        await logOutAsync();
+        await LogOutAsync();
         setUser(null);
         //navigate("/");
     };

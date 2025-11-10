@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import SiteConfigs from '../configs/SiteConfigs';
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit, ConfirmPasswordField, EmailField, PasswordField, PasswordFieldLogin, TextField } from '../components/FormComponents';
-import { registerAsync } from '../configs/api/ApiClientAuth';
+import { ButtonSubmit, ConfirmPasswordField, EmailField, PasswordField, TextField } from '../components/FormComponents';
+import { RegisterAsync } from '../configs/api/ApiClientAuth';
 import { Loading, NetworkAlert } from '../components/Components';
 //import { registerAsync } from '../configs/services/AuthService';
 
@@ -21,7 +21,7 @@ export default function Register() {
     try{
         setLoading(true);
         setError(null);
-        await registerAsync(formData);
+        await RegisterAsync(formData);
         alert("Un code de confirmation a ete envoyer sur votre email");
         sessionStorage.setItem("emailToConfirm", formData.email);
         navigate("/auth/codeConfirmation");

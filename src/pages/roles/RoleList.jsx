@@ -4,8 +4,10 @@ import { useFetch } from "../../configs/services/ServiceHooks";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Loading, NetworkAlert } from "../../components/Components";
+import { useAuth } from "../../configs/api/ApiConfigs";
 
 export const RoleList = () => {
+    const { user } = useAuth();
 
     const {data, loading, error} = useFetch(getAll);
     const {t} = useTranslation();
@@ -30,7 +32,7 @@ export const RoleList = () => {
             setError(ex.response?.data?.message || ex.message);
         }
     };
-    console.log(data);
+    //console.log(data);
 
     return (
         
@@ -41,14 +43,12 @@ export const RoleList = () => {
         </Link>
 
         <h2>Roles</h2>
-        <table border="1" cellPadding="8" cellSpacing="0">
+        <table className="w-100" border="1" cellPadding="8" cellSpacing="0">
         <thead>
             <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Details</th>
-            <th>UpdatedAt</th>
-            <th>CreatedAt</th>
             <th>Actions</th>
             </tr>
         </thead>
@@ -59,12 +59,10 @@ export const RoleList = () => {
                 <td>{v.id}</td>
                 <td>{v.name}</td>
                 <td>{v.roleDetail}</td>
-                <td>{v.updatedAt}</td>
-                <td>{v.createdAt}</td>
                 <td>
                     <Link to={`/roles/${v.id}`} className="me-2 btn btn-success bi-card-checklist"> Voir</Link>
                     <Link to={`/roles/edit/${v.id}`} className="me-2 btn btn-primary bi-pen-fill" > Modifier</Link>
-                    <button onClick={() => handleDelete(v.id)} className="btn btn-danger bi-trash3-fill"> Supprimer</button>
+                    {user && <button onClick={() => handleDelete(v.id)} className="btn btn-danger bi-trash3-fill"> Supprimer</button>}
                 </td>
             </tr>
             ))}

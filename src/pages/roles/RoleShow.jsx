@@ -18,14 +18,12 @@ export const RoleShow = () => {
     if (!data || (Array.isArray(data) && data.length === 0)) 
         return <p className="text-danger text-center">{t("Notfound")}</p>;
 
-    console.log(user);
-    console.log(data);
+    //console.log(user);
+    //console.log(data);
     return (
         <>
             <p>Role : {data.name}</p>
-            {user.role == "USER" && <p>Details : {data.concurrencyStamp}</p>}
-            <p>Updated : {data.updatedAt}</p>
-            <p>Created : {data.createdAt}</p>
+            {user && user.role == "USER" && <p>Details : {data.concurrencyStamp}</p>}
             <p><Link to={`/roles/edit/${data.id}`} className="me-2 btn btn-primary bi-pen-fill" > Modifier</Link></p>
         </>
         

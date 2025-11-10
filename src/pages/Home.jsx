@@ -17,7 +17,7 @@ export default function Home() {
             <Link to="/auth/codeConfirmation" className="fw-bold fs-2 text-decoration-none me-5" > 
               Account
             </Link>
-            <Link to="/user" className="fw-bold fs-2 text-decoration-none me-5" > 
+            <Link to="/users" className="fw-bold fs-2 text-decoration-none me-5" > 
               USERS
             </Link>
 
