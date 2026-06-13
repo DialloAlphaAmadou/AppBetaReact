@@ -3,6 +3,7 @@ import { cleanupTokens } from "../api/TokenConfig";
 
 export const registerAsync = async (datas) => {
     const response = await apiClient.post("/auth/register", datas);
+    console.log(response.data);
     return response.data;
 }
 

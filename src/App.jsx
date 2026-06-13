@@ -21,6 +21,7 @@ import ResetPassword from './auth/ResetPassword';
 import { UserShow } from './pages/users/UserShow';
 import { AddRole } from './pages/users/AddRole';
 import ChangePassword from './auth/ChangePassword';
+import ConfirmEmail from './auth/ConfirmEmail';
 
 export default function App() {
 
@@ -63,7 +64,9 @@ function AppContent() {
           {/* Gestions */}
           {!user && <Route path="/login" element={<Login />} />}
           {!user && <Route path="/register" element={<Register />} />}
-          <Route path="/resetPassword" element={<EmailVerified />} />
+          <Route path="/reset-password" element={<EmailVerified />} />
+          <Route path="/confirm-email" element={<ConfirmEmail />} />
+
           <Route path="/auth/codeConfirmation" element={<ConfirmationAccount />} />
           <Route path="/auth/emailverified" element={<EmailVerified />} />
           <Route path="/auth/resetPassword" element={<ResetPassword />} />

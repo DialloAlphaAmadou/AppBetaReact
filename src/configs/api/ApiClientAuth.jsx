@@ -44,15 +44,19 @@ export const LogOutAsync = async () => {
     }
 }
 
-//Confirmation du mail
+//Renvoi du lien de confirmation a partir de l'email
 export const EmailVerifiedAsync = async (datas) => {
-    const response = await ApiClient.post("/auth/emailVerified", datas);
+    const response = await ApiClient.post("/auth/send-confirm-email", datas);
     return response.data;
 }
 
 //Confirmation du mail
+export const ConfirmEmailAsync = async (datas) => {
+    const response = await ApiClient.post("/auth/confirm-email", datas);
+    return response.data;
+}
 export const ConfirmationCodeAsync = async (datas) => {
-    const response = await ApiClient.post("/auth/codeConfirmation", datas);
+    const response = await ApiClient.post("/auth/confirm-email", datas);
     return response.data;
 }
 
