@@ -37,7 +37,7 @@ export default function ConfirmationAccount() {
               await ConfirmationCodeAsync(formData);
               sessionStorage.removeItem("emailToConfirm");
               alert("Votre compte a ete comfirmer");
-              navigate("/");
+              navigate("/login");
           }catch(ex){
               let exMessage = "";
               const infoData = ex.response?.data;

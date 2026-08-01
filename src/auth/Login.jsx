@@ -44,9 +44,10 @@ export default function Login() {
 
       if (loading) return <Loading />;
       if (error == "Network Error") return <NetworkAlert />; 
-      if (error == "Confirmer le mail."){
+      //if (error == "Confirmer le mail."){
+      if (error == "901"){
         alert("Vous devez confirmer votre adresse email pour se connecter...")
-        navigate("/auth/emailVerified");
+        navigate("/email-verified");
       } 
 
   return (
@@ -68,7 +69,7 @@ export default function Login() {
         </form>
 
         <div className="text-center mt-3">
-          <Link to="/resetPassword" className="d-block" >{t("forgot_your_password")}</Link>
+          <Link to="/email-verified" className="d-block" >{t("forgot_your_password")}</Link>
           <Link to="/register" className="d-block" >{t("create_an_account")} </Link>
         </div>
 

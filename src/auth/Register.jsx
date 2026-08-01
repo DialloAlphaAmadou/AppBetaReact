@@ -58,7 +58,7 @@ export default function Register() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="">
           {error && <div className="text-warning bg-danger bg-opacity-2 p-1 rounded-1">{error}</div>}
-          <TextField label={"Name"} name={"Name"} register={register} errors={errors} />
+          <TextField label={"LastName"} name={"LastName"} register={register} errors={errors} />
           <TextField label={"FirstName"} name={"FirstName"} register={register} errors={errors} />
           <TextField label={"username"} name={"Username"} register={register} errors={errors} />
           <EmailField register={register} errors={errors} />

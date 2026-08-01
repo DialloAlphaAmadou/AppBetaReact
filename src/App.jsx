@@ -42,7 +42,7 @@ function AppContent() {
     const location = useLocation();
     const authPaths = ["/login", "/register", "/password", "/auth/action", "", "/test"];
     const knownPaths = ["/", "/home", "/about", "/contact", "/services", "/setting", 
-      `${user? [`/profil/${user.id}`,] : ""}`];
+      `${user? [`/${user.id}`,] : ""}`];
     const hideHeaderFooter = knownPaths.includes(location.pathname);
     
   return (
@@ -61,19 +61,19 @@ function AppContent() {
           <Route path="/setting" element={<Settings />} />
 
 
-          {/* Gestions */}
+          {/* Gestions d'authentification */}
           {!user && <Route path="/login" element={<Login />} />}
           {!user && <Route path="/register" element={<Register />} />}
-          <Route path="/reset-password" element={<EmailVerified />} />
           <Route path="/confirm-email" element={<ConfirmEmail />} />
+          <Route path="/code-confirmation" element={<ConfirmationAccount />} />
+          <Route path="/email-verified" element={<EmailVerified />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          {user && <Route path="/change-password" element={<ChangePassword />} />}
 
-          <Route path="/auth/codeConfirmation" element={<ConfirmationAccount />} />
-          <Route path="/auth/emailverified" element={<EmailVerified />} />
-          <Route path="/auth/resetPassword" element={<ResetPassword />} />
-          <Route path="/auth/changePassword" element={<ChangePassword />} />
+          {/* Profile */}
+          {user && <Route path={`/${user.id}`} element={<Profil />} />} 
 
           {/* Users */}
-          {user && <Route path={`/profil/${user.id}`} element={<Profil />} />} 
           {user && <Route path="/users" element={<UserList />} />} 
           <Route path="/users" element={<UserList />} /> 
           <Route path="/users/:id" element={<UserShow />} /> 

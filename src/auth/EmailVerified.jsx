@@ -32,10 +32,10 @@ export default function EmailVerified() {
               }
               sessionStorage.setItem("emailToConfirm", formData.email);
               alert("Un code a ete envoyer sur votre email");
-              if(location.pathname == "/resetPassword"){
-                navigate("/auth/resetPassword");
+              if(location.pathname == "/reset-password"){
+                navigate("/reset-password");
               }else{
-                navigate("/auth/codeConfirmation");
+                navigate("/code-confirmation");
               }
           }catch(ex){
               let exMessage = "";
