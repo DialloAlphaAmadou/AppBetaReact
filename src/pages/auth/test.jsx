@@ -1,4 +1,4 @@
-
+/*
 import { useAuth } from "../configs/api/ApiConfigs";
 import { useState } from "react";
 
@@ -31,3 +31,5 @@ function passwordButton1(register, errors, {t}, SiteConfigs){
 
   )
 }
+
+*/

@@ -1,13 +1,13 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import SiteConfigs from '../configs/SiteConfigs';
+import SiteConfigs from '../../configs/AppConfigs';
 import { useTranslation } from "react-i18next";
-import { ButtonSubmit, ConfirmPasswordField, EmailField, PasswordField, TextField } from '../components/FormComponents';
-import { RegisterAsync } from '../configs/api/ApiClientAuth';
-import { Loading, NetworkAlert } from '../components/Components';
-//import { registerAsync } from '../configs/services/AuthService';
+import { ButtonSubmit, ConfirmPasswordField, EmailField, PasswordField, TextField } from '../../components/Form';
+import { Loading, NetworkAlert } from '../../components/Components';
+import { setItemStored } from '../../configs/localStorage/ItemsStorage';
+import { getErrorMessage } from '../../configs/api/ErrorHandler';
+import { registerAsync } from '../../configs/services/AuthService';
 
 export default function Register() {
 
@@ -21,21 +21,12 @@ export default function Register() {
     try{
         setLoading(true);
         setError(null);
-        await RegisterAsync(formData);
+        await registerAsync(formData);
         alert("Un code de confirmation a ete envoyer sur votre email");
-        sessionStorage.setItem("emailToConfirm", formData.email);
-        navigate("/auth/codeConfirmation");
+        setItemStored("email", formData.email);
+        navigate("/confirm-account");
     }catch(ex){
-        let exMessage = "";
-        const infoData = ex.response?.data;
-        if(infoData?.errors){
-            const exM = Object.values(infoData?.errors).flat();
-            exMessage = exM.join("\n");
-        }
-        if(!exMessage)
-            exMessage = infoData?.message || ex.message;
-        
-        setError(exMessage);
+        setError(getErrorMessage(ex));
     }finally{
       setLoading(false);
     }

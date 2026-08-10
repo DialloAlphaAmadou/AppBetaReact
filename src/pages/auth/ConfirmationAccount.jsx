@@ -1,28 +1,29 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import { getUserFromToken } from "../../configs/localStorage/TokenStorage";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { Loading, NetworkAlert } from "../components/Components";
-import { CodeConfirmButton } from "../configs/api/ApiConfigs";
-import { ResetPasswordAsync } from "../configs/api/ApiClientAuth";
-import { ButtonSubmit, ConfirmPasswordField, PasswordField, TextField } from "../components/FormComponents";
-import { useNavigate } from "react-router-dom";
+import { CodeConfirmButton, Loading, NetworkAlert } from "../../components/Components";
+import { ButtonSubmit, EmailField, TextField } from "../../components/Form";
+import { getItemStored, removeItemStored } from "../../configs/localStorage/ItemsStorage";
+import { getErrorMessage } from "../../configs/api/ErrorHandler";
 
-export default function ResetPassword() {
+export default function ConfirmationAccount() {
 
     //const isOnline = useNetworkStatus();
     //if (!isOnline) { return <NetworkAlert/>; }
     
     const {t} = useTranslation();
-    const navigate = useNavigate(); 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [email, setEmail] = useState(null);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const navigate = useNavigate(); 
+    const { register, handleSubmit, formState: { errors } } = useForm();
     
       useEffect(() => {
-        const storedEmail  = sessionStorage.getItem("emailToConfirm");
+        const storedEmail  = getItemStored("email");
         if (!storedEmail ) {
-          navigate("resetPassword");
+          navigate("/email-verified");
         }else{
           setEmail(storedEmail);
         }
@@ -33,21 +34,12 @@ export default function ResetPassword() {
               setLoading(true);
               setError(null);
               formData.email = email;
-              await ResetPasswordAsync(formData);
-              sessionStorage.removeItem("emailToConfirm");
-              alert("Votre mot de passe a ete modifier");
-              navigate("/");
+              await ConfirmationCodeAsync(formData);
+              removeItemStored("email");
+              alert("Votre compte a ete comfirmer");
+              navigate("/login");
           }catch(ex){
-              let exMessage = "";
-              const infoData = ex.response?.data;
-              if(infoData?.errors){
-                  const exM = Object.values(infoData?.errors).flat();
-                  exMessage = exM.join("\n");
-              }
-              if(!exMessage)
-                  exMessage = infoData?.message || ex.message;
-              
-              setError(exMessage);
+              setError(getErrorMessage(ex));
           }finally{
               setLoading(false);
           }
@@ -67,8 +59,6 @@ export default function ResetPassword() {
         <form onSubmit={handleSubmit(onSubmit)} className="">
           {error && <div className="text-warning bg-danger bg-opacity-2 p-1 rounded-1">{error}</div>}
           <TextField label={"Code"} name={"Code"} register={register} errors={errors} />
-          <PasswordField register={register} errors={errors} />
-          <ConfirmPasswordField register={register} errors={errors} watch={watch}/>
           <ButtonSubmit name={"Valider"} icon={"bi-box-arrow-in-right"} />
         </form>
         <div className="pt-2">

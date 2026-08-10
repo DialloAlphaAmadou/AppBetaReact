@@ -4,7 +4,7 @@ import { useFetch } from "../../configs/services/ServiceHooks";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Loading, NetworkAlert } from "../../components/Components";
-import { useAuth } from "../../configs/api/ApiConfigs";
+import { useAuth } from "../../configs/providers/AuthProvider";
 
 export const RoleList = () => {
     const { user } = useAuth();

@@ -4,8 +4,8 @@ import { useFetch } from "../../configs/services/ServiceHooks";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { ButtonSubmit, TextAreaField, TextField } from "../../components/FormComponents";
-import SiteConfigs from "../../configs/SiteConfigs";
+import { ButtonSubmit, TextAreaField, TextField } from "../../components/Form";
+import SiteConfigs from "../../configs/AppConfigs";
 import { Loading, NetworkAlert } from "../../components/Components";
 
 export const RoleForm = ({isEdit = false}) => {

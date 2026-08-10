@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFetch } from '../configs/services/ServiceHooks';
-import { ProfilAsync } from '../configs/api/ApiClientAuth';
-import { useAuth } from '../configs/api/ApiConfigs';
+import { useAuth } from '../configs/providers/AuthProvider';
+import { getProfileAsync } from '../configs/services/Me';
 
 export default function Home() {
     const {user} = useAuth();
     if(user){
-        const {data, error, loading} = useFetch(ProfilAsync);
+        const {data, error, loading} = useFetch(getProfileAsync);
     }
     
     return (

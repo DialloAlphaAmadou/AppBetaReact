@@ -1,43 +1,33 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { ConfirmationCodeAsync, EmailVerifiedAsync } from "../configs/api/ApiClientAuth";
-import { getUserFromToken } from "../configs/api/TokenConfig";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { Loading, NetworkAlert } from "../components/Components";
-import { ButtonSubmit, EmailField, TextField } from "../components/FormComponents";
-import { CodeConfirmButton } from "../configs/api/ApiConfigs";
+import { Loading, NetworkAlert } from "../../components/Components";
+import { useAuth } from "../../configs/providers/AuthProvider";
+import { ButtonSubmit, ConfirmPasswordField, EmailField, OldPasswordField, PasswordField, PasswordFieldLogin, TextField } from "../../components/Form";
+import { useNavigate } from "react-router-dom";
+import { changePasswordAsync } from "../../configs/services/AuthService";
 
-export default function ConfirmationAccount() {
+export default function ChangePassword() {
 
     //const isOnline = useNetworkStatus();
     //if (!isOnline) { return <NetworkAlert/>; }
-    
+    const {user} = useAuth();
     const {t} = useTranslation();
+    const navigate = useNavigate(); 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [email, setEmail] = useState(null);
-    const navigate = useNavigate(); 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    
-      useEffect(() => {
-        const storedEmail  = sessionStorage.getItem("emailToConfirm");
-        if (!storedEmail ) {
-          navigate("/auth/emailverified");
-        }else{
-          setEmail(storedEmail);
-        }
-      }, [navigate]);
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
       const onSubmit = async (formData) => {
           try{
               setLoading(true);
               setError(null);
-              formData.email = email;
-              await ConfirmationCodeAsync(formData);
-              sessionStorage.removeItem("emailToConfirm");
-              alert("Votre compte a ete comfirmer");
-              navigate("/login");
+              formData.email = user ? user.email : null;
+              console.log(formData);
+              await changePasswordAsync(formData);
+              alert("Vous avez changer votre Password");
+              navigate("/");
           }catch(ex){
               let exMessage = "";
               const infoData = ex.response?.data;
@@ -67,13 +57,11 @@ export default function ConfirmationAccount() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="">
           {error && <div className="text-warning bg-danger bg-opacity-2 p-1 rounded-1">{error}</div>}
-          <TextField label={"Code"} name={"Code"} register={register} errors={errors} />
+          <OldPasswordField register={register} errors={errors} />
+          <PasswordField register={register} errors={errors} />
+          <ConfirmPasswordField register={register} errors={errors} watch={watch}/>
           <ButtonSubmit name={"Valider"} icon={"bi-box-arrow-in-right"} />
         </form>
-        <div className="pt-2">
-          {email &&<CodeConfirmButton email={email}/>}
-        </div>
-        
 
       </div>
     

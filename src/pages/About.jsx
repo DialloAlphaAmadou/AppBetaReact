@@ -1,5 +1,5 @@
 import React from 'react';
-import SiteConfigs from '../configs/SiteConfigs';
+import SiteConfigs from '../configs/AppConfigs';
 
 function About() {
     return ( 

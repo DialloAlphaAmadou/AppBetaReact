@@ -4,7 +4,7 @@ import { deleteUser, getUsers } from "../../configs/services/UserService.jsx.jsx
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { Loading, NetworkAlert } from "../../components/Components.jsx";
-import SiteConfigs from "../../configs/SiteConfigs.jsx";
+import SiteConfigs from "../../configs/AppConfigs.jsx";
 
 export const UserList = () => {
     const {t} = useTranslation();

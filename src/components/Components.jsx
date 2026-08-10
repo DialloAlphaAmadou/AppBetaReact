@@ -22,3 +22,20 @@ export const Loading = () =>{
       </div>
     );
 }
+
+
+//Bouton de renvoyer le code de confirmation
+export function CodeConfirmButton(email) {
+    const navigate = useNavigate();
+    const {t} = useTranslation();
+    const handleResend= async () => {
+        await EmailVerifiedAsync(email);
+        alert("Le code a ete envoyer.");
+    };
+
+  return (
+    <div>
+        <button className="btn btn-primary w-100 bi bi-box-arrow-left" onClick={handleResend}> Renvoyer le code</button>
+    </div>
+  );
+}

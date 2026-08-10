@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {useTheme} from './ThemeToggle';
-import SiteConfigs from '../configs/SiteConfigs';
+import SiteConfigs from '../configs/AppConfigs';
 import { useTranslation  } from 'react-i18next';
-import { LogoutButton, useAuth } from '../configs/api/ApiConfigs';
+import { LogoutButton, useAuth } from '../configs/providers/AuthProvider';
 
 function Header (){
 

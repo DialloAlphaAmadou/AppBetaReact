@@ -3,9 +3,8 @@ import { getOne } from "../../configs/services/RoleService";
 import { useFetch } from "../../configs/services/ServiceHooks";
 import { Link, useParams } from "react-router-dom";
 import { Loading, NetworkAlert } from "../../components/Components";
-import { ProfilAsync } from "../../configs/api/ApiClientAuth";
 import { delRoleToUser, getUser } from "../../configs/services/UserService.jsx";
-import SiteConfigs from "../../configs/SiteConfigs.jsx";
+import SiteConfigs from "../../configs/AppConfigs.jsx";
 import { useState } from "react";
 
 export const UserShow = () => {

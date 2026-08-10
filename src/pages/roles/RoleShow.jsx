@@ -3,7 +3,7 @@ import { getOne, getRole } from "../../configs/services/RoleService";
 import { useFetch } from "../../configs/services/ServiceHooks";
 import { Link, useParams } from "react-router-dom";
 import { Loading, NetworkAlert } from "../../components/Components";
-import { useAuth } from "../../configs/api/ApiConfigs";
+import { useAuth } from "../../configs/providers/AuthProvider";
 
 export const RoleShow = () => {
     const {t} = useTranslation();

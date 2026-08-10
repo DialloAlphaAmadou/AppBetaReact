@@ -1,10 +1,9 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { getToken, getUserFromToken, isTokenExpired } from "./TokenConfig";
+import { getAccessToken, getUserFromToken, isTokenExpired } from "../localStorage/TokenStorage";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { EmailVerifiedAsync, LogInAsync, LogOutAsync } from "./ApiClientAuth";
 import { Loading } from "../../components/Components";
-//import { loginAsync, logoutAsync } from "../services/AuthService";
+import { loginAsync, logoutAsync } from "../services/AuthService";
 
 //Crée un contexte vide
 const AuthContext = createContext();
@@ -23,7 +22,7 @@ export function AuthProvider({ children }) {
 
     useEffect(() => {
         const initializeAuth = () => {
-            if(getToken() && !isTokenExpired()){
+            if(getAccessToken() && !isTokenExpired()){
               var userInfos = getUserFromToken();
               setUser(userInfos);
             }else{
@@ -36,16 +35,15 @@ export function AuthProvider({ children }) {
 
     //LogIn
     const logIn = async (data) => {
-        await LogInAsync(data);
+        await loginAsync(data);
         var userInfos = getUserFromToken();
         setUser(userInfos)
     };
 
     //LogOut
     const logOut = async () => {
-        await LogOutAsync();
+        await logoutAsync();
         setUser(null);
-        //navigate("/");
     };
 
     return ( //{children}
@@ -96,21 +94,11 @@ export function LogoutButton() {
   );
 }
 
-//Renvoyer le code de confirmation
-export function CodeConfirmButton(email) {
-    const navigate = useNavigate();
-    const {t} = useTranslation();
-    const handleResend= async () => {
-        await EmailVerifiedAsync(email);
-        alert("Le code a ete envoyer.");
-    };
 
-  return (
-    <div>
-        <button className="btn btn-primary w-100 bi bi-box-arrow-left" onClick={handleResend}> Renvoyer le code</button>
-    </div>
-  );
-}
+
+
+
+
 
 /*
 // Verification Email

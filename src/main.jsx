@@ -5,8 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './css/index.css'
 import App from './App.jsx'
-import "./configs/i18n";
-import { AuthProvider } from './configs/api/ApiConfigs.jsx';
+import "./configs/languages/i18n.jsx";
 
 createRoot(document.getElementById('root')).render(
     //<StrictMode>

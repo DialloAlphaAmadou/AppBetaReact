@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import SiteConfigs from '../configs/SiteConfigs';
+import SiteConfigs from '../configs/AppConfigs';
 
 function LanguageSelector() {
   const { i18n, t } = useTranslation();

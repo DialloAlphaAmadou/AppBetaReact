@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import SiteConfigs from '../configs/SiteConfigs';
+import SiteConfigs from '../configs/AppConfigs';
 import { useTranslation  } from 'react-i18next';
 
 // Crée le contexte

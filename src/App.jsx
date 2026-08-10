@@ -11,17 +11,17 @@ import { RoleList } from './pages/roles/RoleList';
 import { RoleShow } from './pages/roles/RoleShow';
 import { UserList } from './pages/users/UserList';
 import { RoleForm } from './pages/roles/RoleForm';
-import Login from './auth/Login';
-import Register from './auth/Register';
-import { AuthProvider, useAuth } from './configs/api/ApiConfigs';
-import Profil from './auth/Profil';
-import ConfirmationAccount from './auth/ConfirmationAccount';
-import EmailVerified from './auth/EmailVerified';
-import ResetPassword from './auth/ResetPassword';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Profile from './pages/me/Profile';
+import ConfirmationAccount from './pages/auth/ConfirmationAccount';
+import EmailVerified from './pages/auth/EmailVerified';
+import ResetPassword from './pages/auth/ResetPassword';
 import { UserShow } from './pages/users/UserShow';
 import { AddRole } from './pages/users/AddRole';
-import ChangePassword from './auth/ChangePassword';
-import ConfirmEmail from './auth/ConfirmEmail';
+import ChangePassword from './pages/auth/ChangePassword';
+import ConfirmEmail from './pages/auth/ConfirmEmail';
+import { AuthProvider, useAuth } from './configs/providers/AuthProvider';
 
 export default function App() {
 
@@ -65,13 +65,13 @@ function AppContent() {
           {!user && <Route path="/login" element={<Login />} />}
           {!user && <Route path="/register" element={<Register />} />}
           <Route path="/confirm-email" element={<ConfirmEmail />} />
-          <Route path="/code-confirmation" element={<ConfirmationAccount />} />
+          <Route path="/confirm-account" element={<ConfirmationAccount />} />
           <Route path="/email-verified" element={<EmailVerified />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           {user && <Route path="/change-password" element={<ChangePassword />} />}
 
           {/* Profile */}
-          {user && <Route path={`/${user.id}`} element={<Profil />} />} 
+          {user && <Route path={`/${user.id}`} element={<Profile />} />} 
 
           {/* Users */}
           {user && <Route path="/users" element={<UserList />} />} 
@@ -84,8 +84,8 @@ function AppContent() {
           <Route path="/roles" element={<RoleList />} /> 
           <Route path="/roles/:id" element={<RoleShow />} /> 
           <Route path="/roles/create" element={<RoleForm />} /> 
-          <Route path="/roles/edit/:id" element={<RoleForm isEdit />} /> 
-          
+          <Route path="/roles/edit/:id" element={<RoleForm isEdit />} />   
+
         </Routes>
       </div>
       {hideHeaderFooter && <Footer />}

@@ -1,5 +1,5 @@
 
-const SiteConfigs = {
+const appConfigs = {
   siteName: "BetaWeb",
   logo: "/assets/app/betaicon.jpg",
   logo1: "/assets/app/logo1.jpeg",
@@ -9,4 +9,4 @@ const SiteConfigs = {
   color: "danger"
 };
 
-export default SiteConfigs;
+export default appConfigs;

@@ -5,8 +5,8 @@ import { useState } from "react";
 import { Loading } from "../../components/Components";
 import { getAll } from "../../configs/services/RoleService";
 import { useForm } from "react-hook-form";
-import { ButtonSubmit, SelectField } from "../../components/FormComponents";
-import SiteConfigs from "../../configs/SiteConfigs";
+import { ButtonSubmit, SelectField } from "../../components/Form.jsx";
+import SiteConfigs from "../../configs/AppConfigs.jsx";
 import { addRoleToUser } from "../../configs/services/UserService.jsx";
 
 export const AddRole = () => {

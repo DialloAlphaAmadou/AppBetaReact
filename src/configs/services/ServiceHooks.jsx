@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useNetworkStatus } from "../api/ApiConfigs";
+import { useNetworkStatus } from "../providers/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { Loading, NetworkAlert } from "../../components/Components";
 

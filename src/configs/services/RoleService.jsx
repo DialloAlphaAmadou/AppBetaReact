@@ -1,7 +1,7 @@
 import apiClient from "../api/ApiClient";
 
 export const getAll = async () => {
-    const response = await apiClient.get("/role")
+    const response = await apiClient.get("/role");
     return response.data;
 }
 

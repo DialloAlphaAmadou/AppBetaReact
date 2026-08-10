@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ConfirmEmailAsync } from "../configs/api/ApiClientAuth";
+import { confirmEmailAsync } from "../../configs/services/AuthService";
 
 export default function ConfirmEmail() {
     const [searchParams] = useSearchParams();
@@ -12,7 +12,7 @@ export default function ConfirmEmail() {
                     userId: searchParams.get("userId"),
                     token: searchParams.get("token")
                 };
-                const res = await ConfirmEmailAsync(data);
+                const res = await confirmEmailAsync(data);
                 console.log(res);
                 setMessage(res || "Email confirmé avec succès *****");
             }catch(ex){

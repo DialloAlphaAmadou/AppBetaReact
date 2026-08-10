@@ -1,16 +1,15 @@
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Loading, NetworkAlert } from "../components/Components";
-import { ButtonSubmit, EmailField, TextField } from "../components/FormComponents";
+import { Loading, NetworkAlert } from "../../components/Components";
+import { ButtonSubmit, EmailField, TextField } from "../../components/Form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { EmailVerifiedAsync } from "../configs/api/ApiClientAuth";
-import { useAuth } from "../configs/api/ApiConfigs";
+import { useAuth } from "../../configs/providers/AuthProvider";
+import { emailVerifiedAsync } from "../../configs/services/AuthService";
+import { setItemStored } from "../../configs/localStorage/ItemsStorage";
+import { getErrorMessage } from "../../configs/api/ErrorHandler";
 
 export default function EmailVerified() {
-
-    //const isOnline = useNetworkStatus();
-    //if (!isOnline) { return <NetworkAlert/>; }
 
     const location = useLocation();
     const {t} = useTranslation();
@@ -26,11 +25,11 @@ export default function EmailVerified() {
               setError(null);
               if(user){
                 formData.email = user.email;
-                await EmailVerifiedAsync(formData);
+                await emailVerifiedAsync(formData);
               }else{
-                await EmailVerifiedAsync(formData);
+                await emailVerifiedAsync(formData);
               }
-              sessionStorage.setItem("emailToConfirm", formData.email);
+              setItemStored("email", formData.email);
               alert("Un code a ete envoyer sur votre email");
               if(location.pathname == "/reset-password"){
                 navigate("/reset-password");
@@ -38,16 +37,7 @@ export default function EmailVerified() {
                 navigate("/code-confirmation");
               }
           }catch(ex){
-              let exMessage = "";
-              const infoData = ex.response?.data;
-              if(infoData?.errors){
-                  const exM = Object.values(infoData?.errors).flat();
-                  exMessage = exM.join("\n");
-              }
-              if(!exMessage)
-                  exMessage = infoData?.message || ex.message;
-              
-              setError(exMessage);
+              setError(getErrorMessage(ex));
           }finally{
               setLoading(false);
           }
