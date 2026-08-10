@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { getAccessToken, getUserFromToken, isTokenExpired } from "../localStorage/TokenStorage";
+import { getAccessToken, getUserFromToken, isTokenExpired, removeToken } from "../localStorage/TokenStorage";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Loading } from "../../components/Components";
-import { loginAsync, logoutAsync } from "../services/AuthService";
+import { loginAsync, logoutAsync, refreshAsync } from "../services/AuthService";
 
 //Crée un contexte vide
 const AuthContext = createContext();
@@ -21,14 +21,19 @@ export function AuthProvider({ children }) {
     //const didFetch = useRef(false);
 
     useEffect(() => {
-        const initializeAuth = () => {
-            if(getAccessToken() && !isTokenExpired()){
-              var userInfos = getUserFromToken();
-              setUser(userInfos);
+        const initializeAuth = async () => {
+          try{
+            const accessToken = getAccessToken();
+            if(accessToken && !isTokenExpired()){
+              setUser(getUserFromToken());
+              return;
             }else{
-              logOut()
+              removeToken();
+              setUser(null);
             }
-            setLoading(false)
+          }finally{
+            setLoading(false);
+          }
         }
         initializeAuth();
     }, []);
@@ -42,8 +47,11 @@ export function AuthProvider({ children }) {
 
     //LogOut
     const logOut = async () => {
+      try {
         await logoutAsync();
-        setUser(null);
+      } finally {
+          setUser(null);
+      }
     };
 
     return ( //{children}
@@ -82,7 +90,6 @@ export function LogoutButton() {
 
     const handleLogout = async () => {
         await logOut();
-        navigate("/");
     };
 
   return (

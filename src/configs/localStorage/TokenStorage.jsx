@@ -51,3 +51,17 @@ export const getUserFromToken = () => {
 }
 
 
+export const tempsToken = () => {
+    const token = getAccessToken();
+    if (!token) return "pas de token 000000";
+
+    try {
+        const decoded = jwtDecode(token);
+        if (!decoded.exp) return "decoded 0000000";
+        const now = Date.now() / 1000; // en secondes
+        return {exp: decoded.exp, now: now} ;
+    } catch {
+        return "catch000000000";
+    }
+};
+

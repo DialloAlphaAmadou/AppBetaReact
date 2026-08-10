@@ -29,6 +29,23 @@ export const logoutAsync = async () => {
     }
 };
 
+export const refreshAsync = async () => {
+    try {
+        const refreshToken = getRefreshToken();
+        if (!refreshToken) return null;
+        const response = await apiClient.post("/auth/refresh-token", { refreshToken });
+        alert("Connexion Refresh1");
+        const { accessToken, refreshToken : newRefreshToken } = response.data;
+        setToken(accessToken, newRefreshToken, true); //Sauvegarde des tokens
+        
+        alert("Connexion Refresh !");
+        return response.data;
+    } catch {
+        await logoutAsync();
+        return null;
+    }
+}
+
 //Envoi du code de confirmation a partir de l'email
 export const emailVerifiedAsync = async (datas) => {
     const response = await apiClient.post("/auth/send-confirm-email", datas);
@@ -43,42 +60,15 @@ export const confirmEmailAsync = async (datas) => {
 
 //Modifier le password a partir du code de confirmation 
 export const resetPasswordAsync = async (datas) => {
-    const response = await ApiClient.post("/auth/reset-password", datas);
+    const response = await apiClient.post("/auth/reset-password", datas);
     return response.data;
 }
 
 //Modifier le password a partir de l'ancien password
 export const changePasswordAsync = async (datas) => {
-    const response = await ApiClient.post("/auth/change-password", datas);
+    const response = await apiClient.post("/auth/password", datas);
     const { accessToken, refreshToken } = response.data;
     setToken(accessToken, refreshToken, true); //Sauvegarde des tokens
     return response.data;
 }
 
-
-
-
-
-
-
-/*
-export const refreshAsync = async () => {
-    try {
-        const refreshToken = getRefreshToken();
-        if (!refreshToken) return null;
-        
-        const response = await apiClient.post("/auth/refresh-token", { refreshToken });
-        alert("Connexion Refresh1");
-        const { accessToken, refreshToken } = response.data;
-       
-        
-        setToken(accessToken, refreshToken, true); //Sauvegarde des tokens
-        
-        alert("Connexion Refresh !");
-        return response.data;
-    } catch (error) {
-        //console.log(error.response?.data.message || error.message)
-        return null;
-        //console.error("Erreur lors de la déconnexion :", error.response?.data || error.message);
-    }
-}*/

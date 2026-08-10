@@ -75,10 +75,10 @@ export function OldPasswordField({ register, errors }) {
 
     return (
         <div className="mb-3 position-relative">
-            <label htmlFor="code" className="form-label">{t("Old Password")} :</label>
+            <label htmlFor="oldPassword" className="form-label">{t("Old Password")} :</label>
             <input type={showPassword ? "text" : "password"} id="code" placeholder={t("Old Password")}
                 className={`form-control border-${SiteConfigs.color} pe-5`} // padding-end to not overlap icon
-                {...register("code", { required: `${t("Old Password")} ${t("required")}` })}
+                {...register("oldPassword", { required: `${t("Old Password")} ${t("required")}` })}
             />
             <i className={`bi bi-eye${!showPassword ? "-slash" : ""} position-absolute`}
                 style={{ top: "38px", right: "15px", cursor: "pointer", color: "#888" }}

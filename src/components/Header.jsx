@@ -13,7 +13,7 @@ function Header (){
   const {t} = useTranslation();
   const {user} = useAuth();
 
-  //console.log(user);
+  console.log(user);
   return (
     <header className="shadow fixed-top">
       <nav className="navbar navbar-expand-lg my-md-2 my-0 py-md-2 py-0 ">
@@ -104,7 +104,7 @@ function Header (){
               <Link className={`text-${SiteConfigs.color} ${getActiveLink("/profil")} rounded-5 border-0 bi-person-fill fs-1`} data-bs-toggle="dropdown" aria-expanded="false"></Link>
               <ul className="dropdown-menu dropdown-menu-end dropdown-menu-lg-start menuMobile" >
                 <li className="p-2">
-                  <Link to={`/${user.id}`} className={`${getActiveLink("/profil")} bi-person-fill`}> {t("Profil")}</Link>
+                  <Link to={`/${user.username}-${user.id}`} className={`${getActiveLink("/profil")} bi-person-fill`}> {t("Profil")}</Link>
                 </li>
                 <li className="p-2">
                   <Link to="/setting" className={`${getActiveLink("/setting")} bi-gear-fill `}> {t("settings")}</Link>

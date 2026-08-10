@@ -5,11 +5,14 @@ import appConfigs from "../../configs/AppConfigs";
 import { useFetch } from "../../configs/services/ServiceHooks";
 import { getProfileAsync } from "../../configs/services/Me";
 import { Loading, NetworkAlert } from "../../components/Components";
+import { tempsToken } from "../../configs/localStorage/TokenStorage";
 
 
 export default function Profile() {
   //const isOnline = useNetworkStatus();
   //if (!isOnline) { return <NetworkAlert/>; }
+  //const {exp, now}= tempsToken();
+  //alert(`${exp}\n${now}`);
 
   const { user } = useAuth();
   const {t} = useTranslation();
@@ -35,7 +38,7 @@ export default function Profile() {
         </div>
       : <h3>Profil</h3> }
       <div className="mb-2">
-        <Link to="/auth/changePassword" className={`btn btn-${appConfigs.color} rounded px-2 bi-person-fill-lock w-100`}> {t("Change_password")} </Link>
+        <Link to="/change-password" className={`btn btn-${appConfigs.color} rounded px-2 bi-person-fill-lock w-100`}> {t("Change_password")} </Link>
       </div>
       
       <LogoutButton />

@@ -41,8 +41,11 @@ function AppContent() {
     const {user} = useAuth();
     const location = useLocation();
     const authPaths = ["/login", "/register", "/password", "/auth/action", "", "/test"];
-    const knownPaths = ["/", "/home", "/about", "/contact", "/services", "/setting", 
-      `${user? [`/${user.id}`,] : ""}`];
+    const knownPaths = [
+      "/", "/home", "/about", "/contact", "/services", "/setting", 
+      ...(user? [`/${user.username}-${user.id}`, "/change-password",] 
+          : [])
+    ];
     const hideHeaderFooter = knownPaths.includes(location.pathname);
     
   return (
@@ -71,7 +74,7 @@ function AppContent() {
           {user && <Route path="/change-password" element={<ChangePassword />} />}
 
           {/* Profile */}
-          {user && <Route path={`/${user.id}`} element={<Profile />} />} 
+          {user && <Route path={`/${user.username}-${user.id}`} element={<Profile />} />} 
 
           {/* Users */}
           {user && <Route path="/users" element={<UserList />} />} 

@@ -6,6 +6,8 @@ import { useAuth } from "../../configs/providers/AuthProvider";
 import { ButtonSubmit, ConfirmPasswordField, EmailField, OldPasswordField, PasswordField, PasswordFieldLogin, TextField } from "../../components/Form";
 import { useNavigate } from "react-router-dom";
 import { changePasswordAsync } from "../../configs/services/AuthService";
+import { getErrorMessage } from "../../configs/api/ErrorHandler";
+import { getRefreshToken } from "../../configs/localStorage/TokenStorage";
 
 export default function ChangePassword() {
 
@@ -23,22 +25,13 @@ export default function ChangePassword() {
           try{
               setLoading(true);
               setError(null);
-              formData.email = user ? user.email : null;
+              formData.refreshToken = user ? getRefreshToken() : null;
               console.log(formData);
               await changePasswordAsync(formData);
               alert("Vous avez changer votre Password");
               navigate("/");
           }catch(ex){
-              let exMessage = "";
-              const infoData = ex.response?.data;
-              if(infoData?.errors){
-                  const exM = Object.values(infoData?.errors).flat();
-                  exMessage = exM.join("\n");
-              }
-              if(!exMessage)
-                  exMessage = infoData?.message || ex.message;
-              
-              setError(exMessage);
+              setError(getErrorMessage(ex));
           }finally{
               setLoading(false);
           }
@@ -53,7 +46,7 @@ export default function ChangePassword() {
 
       <div className="col-sm-8 col-md-6 col-lg-4 mx-auto p-2 rounded shadow">
 
-        <h2 className="text-center mb-4">Entrez le code</h2>
+        <h2 className="text-center mb-4">Changement de mot de passe</h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="">
           {error && <div className="text-warning bg-danger bg-opacity-2 p-1 rounded-1">{error}</div>}
